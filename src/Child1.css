@@ -1,0 +1,25 @@
+.child1 {
+  padding-top: 15px;
+  margin: auto;
+  width: 60%;
+  outline: auto;
+}
+
+.radio {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.dropdown {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.graphContainer{
+  outline: auto;
+  width: 70px;
+  margin: auto;
+}

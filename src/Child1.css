@@ -1,8 +1,10 @@
 .child1 {
   padding-top: 15px;
   margin: auto;
-  width: 60%;
   outline: auto;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
 }
 
 .radio {
@@ -18,8 +20,8 @@
   justify-content: center;
 }
 
-.graphContainer{
+.graphContainer {
   outline: auto;
-  width: 70px;
+  width: 700px;
   margin: auto;
 }

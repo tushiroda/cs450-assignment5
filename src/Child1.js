@@ -34,15 +34,15 @@ class Child1 extends Component {
         months[d.Date.getMonth()] === this.state.selectedMonth
     );
     var margin = { top: 50, bot: 50, right: 30, left: 30 };
-    var w = 700 - margin.left - margin.right;
-    var h = 500 - margin.top - margin.bot;
+    var w = 500 - margin.left - margin.right;
+    var h = 400 - margin.top - margin.bot;
 
     var container = d3
       .select(".graphContainer")
       .attr("width", w + margin.left + margin.right)
       .attr("height", h + margin.top + margin.bot)
       .select(".g1")
-      .attr("transform", `translate(${margin.left}, ${0})`);
+      .attr("transform", `translate(${margin.left}, 0)`);
 
     // x-axis
     var x_data = data.map((item) => item.Date);
@@ -56,7 +56,12 @@ class Child1 extends Component {
       .join("g")
       .attr("class", "x_axis_g")
       .attr("transform", `translate(0, ${h + 5})`)
-      .call(d3.axisBottom(x_scale));
+      .call(d3.axisBottom(x_scale))
+      .selectAll("text")
+      .style("text-anchor", "start")
+      .attr("dx", "5px")
+      .attr("dy", "5px")
+      .attr("transform", "rotate(45)");
 
     // y-axis
     var y_open = data.map((item) => item.Open);
@@ -211,19 +216,28 @@ class Child1 extends Component {
           </select>
         </form>
 
-        <svg className="graphContainer">
-          <g className="g1"></g>
-          
-        </svg>
+        <div className="graph">
+          <svg className="graphContainer">
+            <g className="g1"></g>
+          </svg>
 
-        <div className="legendOpen">
-            <div className="box" style={{backgroundColor: "red" }}></div>
-            Open
+          <div className="legend">
+            <div className="legendOpen">
+              <div
+                className="box"
+                style={{ backgroundColor: "#b2df8a", margin: 3 }}
+              ></div>
+              Open
+            </div>
+            <div className="legendClose">
+              <div
+                className="box"
+                style={{ backgroundColor: "#e41a1c", margin: 3 }}
+              ></div>
+              Close
+            </div>
           </div>
-          <div className="legendClose">
-            <div className="box"></div>
-            Close
-          </div>
+        </div>
       </div>
     );
   }

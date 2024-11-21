@@ -1,7 +1,6 @@
 .child1 {
   padding-top: 15px;
   margin: auto;
-  outline: auto;
   width: 800px;
   display: flex;
   flex-direction: column;
@@ -21,21 +20,39 @@
 }
 
 .graphContainer {
-  outline: auto;
-  width: 700px;
-  margin: auto;
+  width: 500px;
 }
 
 .tooltip {
   padding: 4px;
   background-color: black;
   color: white;
-  opacity: 50%;
+  opacity: 70%;
   white-space: pre-wrap;
 }
 
-.box{
-  width: 50px;
-  height: 50px;
-  background-color: red;
+.graph {
+  display: flex;
+  justify-content: center;
+}
+
+.box {
+  width: 30px;
+  height: 30px;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+}
+
+.legendOpen {
+  display: flex;
+  align-items: center;
+  
+}
+
+.legendClose {
+  display: flex;
+  align-items: center;
 }

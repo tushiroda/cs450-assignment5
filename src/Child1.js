@@ -150,9 +150,11 @@ class Child1 extends Component {
           .style("left", event.pageX + 5 + "px")
           .style("visibility", "visible")
           .text(
-            `Date: ${timeFormat(d.Date)}\nOpen: ${d.Open}\nClose: ${
-              d.Close
-            }\nDifference: ${(d.Close - d.Open).toFixed(2)}`
+            `Date: ${timeFormat(d.Date)}\nOpen: ${d.Open.toFixed(
+              2
+            )}\nClose: ${d.Close.toFixed(2)}\nDifference: ${(
+              d.Close - d.Open
+            ).toFixed(2)}`
           );
       })
       .on("mouseout", function () {

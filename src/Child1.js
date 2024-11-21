@@ -55,25 +55,57 @@ class Child1 extends Component {
       .attr("transform", `translate(${margin.left - 5}, 0)`)
       .call(d3.axisLeft(y_scale));
 
-    // open
+    // open points
     container
-      .selectAll("circle")
+      .selectAll(".open")
       .data(data)
       .join("circle")
+      .attr("class", "open")
       .attr("cx", (d) => x_scale(d.Date))
       .attr("cy", (d) => y_scale(d.Open))
-      .attr("r", 3)
-      .style("fill", "green")
+      .attr("r", 4)
+      .style("fill", "#b2df8a");
+
+    // open line
+    var openLine = d3
+      .line()
+      .x((d) => x_scale(d.Date))
+      .y((d) => y_scale(d.Open))
+      .curve(d3.curveCardinal);
+    container
+      .select("path")
+      .data([0])
+      .join("path")
+      .attr("d", openLine(data))
+      .attr("stroke", "#b2df8a")
+      .attr("fill", "none")
+      .attr("transform", `translate(0, ${-h})`);
 
     // close
-    // container
-    //   .selectAll("circle")
-    //   .data(data)
-    //   .join("circle")
-    //   .attr("cx", (d) => x_scale(d.Date))
-    //   .attr("cy", (d) => y_scale(d.Close))
-    //   .attr("r", 3)
-    //   .style("fill", "red");
+    container
+      .selectAll(".close")
+      .data(data)
+      .join("circle")
+      .attr("class", "close")
+      .attr("cx", (d) => x_scale(d.Date))
+      .attr("cy", (d) => y_scale(d.Close))
+      .attr("r", 4)
+      .style("fill", "#e41a1c");
+
+    // close points
+    var closeLine = d3
+      .line()
+      .x((d) => x_scale(d.Date))
+      .y((d) => y_scale(d.Close))
+      .curve(d3.curveCardinal);
+    container
+      .select("path")
+      .data([0])
+      .join("path")
+      .attr("d", closeLine(data))
+      .attr("stroke", "#e41a1c")
+      .attr("fill", "none")
+      .attr("transform", `translate(0, ${-h})`);
   }
 
   radioChange = (event) => {

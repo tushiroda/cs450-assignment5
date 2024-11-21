@@ -14,7 +14,25 @@ class Child1 extends Component {
   }
 
   componentDidUpdate() {
-    var data = this.props.csv_data;
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ]; // Use this data to create dropdown
+    var data = this.props.csv_data.filter(
+      (d) =>
+        d.Company === this.state.company &&
+        months[d.Date.getMonth()] === this.state.selectedMonth
+    );
     var margin = { top: 50, bot: 50, right: 30, left: 30 };
     var w = 700 - margin.left - margin.right;
     var h = 500 - margin.top - margin.bot;
@@ -37,7 +55,7 @@ class Child1 extends Component {
       .data([0])
       .join("g")
       .attr("class", "x_axis_g")
-      .attr("transform", `translate(0, ${h})`)
+      .attr("transform", `translate(0, ${h + 5})`)
       .call(d3.axisBottom(x_scale));
 
     // y-axis
@@ -73,13 +91,13 @@ class Child1 extends Component {
       .y((d) => y_scale(d.Open))
       .curve(d3.curveCardinal);
     container
-      .select("path")
+      .selectAll(".openPath")
       .data([0])
       .join("path")
       .attr("d", openLine(data))
+      .attr("class", "openPath")
       .attr("stroke", "#b2df8a")
-      .attr("fill", "none")
-      .attr("transform", `translate(0, ${-h})`);
+      .attr("fill", "none");
 
     // close
     container
@@ -99,13 +117,42 @@ class Child1 extends Component {
       .y((d) => y_scale(d.Close))
       .curve(d3.curveCardinal);
     container
-      .select("path")
+      .selectAll(".closepath")
       .data([0])
       .join("path")
+      .attr("class", "closepath")
       .attr("d", closeLine(data))
       .attr("stroke", "#e41a1c")
-      .attr("fill", "none")
-      .attr("transform", `translate(0, ${-h})`);
+      .attr("fill", "none");
+
+    // tooltip
+    const tooltip = d3
+      .select("body")
+      .append("div")
+      .attr("class", "tooltip")
+      .style("position", "absolute")
+      .style("visibility", "hidden");
+
+    var timeFormat = d3.timeFormat("%m/%d/%Y");
+
+    d3.selectAll("circle")
+      // .on("mouseover", function () {
+      //   return tooltip.style("visibility", "visible");
+      // })
+      .on("mousemove", function (event, d) {
+        return tooltip
+          .style("top", event.pageY + 5 + "px")
+          .style("left", event.pageX + 5 + "px")
+          .style("visibility", "visible")
+          .text(
+            `Date: ${timeFormat(d.Date)}\nOpen: ${d.Open}\nClose: ${
+              d.Close
+            }\nDifference: ${(d.Close - d.Open).toFixed(2)}`
+          );
+      })
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
   }
 
   radioChange = (event) => {
@@ -166,7 +213,17 @@ class Child1 extends Component {
 
         <svg className="graphContainer">
           <g className="g1"></g>
+          
         </svg>
+
+        <div className="legendOpen">
+            <div className="box" style={{backgroundColor: "red" }}></div>
+            Open
+          </div>
+          <div className="legendClose">
+            <div className="box"></div>
+            Close
+          </div>
       </div>
     );
   }

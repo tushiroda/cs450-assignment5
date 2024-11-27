@@ -115,7 +115,7 @@ class Child1 extends Component {
       .attr("r", 4)
       .style("fill", "#e41a1c");
 
-    // close points
+    // close line
     var closeLine = d3
       .line()
       .x((d) => x_scale(d.Date))
